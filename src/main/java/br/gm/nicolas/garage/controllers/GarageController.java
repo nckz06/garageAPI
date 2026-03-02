@@ -36,7 +36,7 @@ public class GarageController {
             
         List<Veiculos> result = garageService.findById(idNum);
         
-        if (result.isEmpty()) {
+        if (result == null) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(result);
