@@ -4,9 +4,11 @@
  */
 package br.gm.nicolas.garage.controllers;
 
+import br.gm.nicolas.garage.DTO.VeiculosMinDTO;
 import br.gm.nicolas.garage.entities.Veiculos;
 import br.gm.nicolas.garage.service.GarageService;
 import java.util.List;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +27,46 @@ public class GarageController {
     
     
     @GetMapping("/forsale")
-    public List<Veiculos> findAll() {
-        List<Veiculos> result = garageService.findAll();
+    public List<VeiculosMinDTO> findAll() {
+        List<VeiculosMinDTO> result = garageService.findAll();
         return result;
     }
     
     
     @GetMapping("/forsale/{idNum}")
-    public ResponseEntity<List<Veiculos>> findById(@PathVariable long idNum) {
+    public ResponseEntity<VeiculosMinDTO> findById(@PathVariable long idNum) {
             
-        List<Veiculos> result = garageService.findById(idNum);
+        VeiculosMinDTO result = garageService.findById(idNum);
         
         if (result == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+        
+    }
+    
+    
+    @GetMapping("/cor/{corName}")
+    public ResponseEntity<List<Veiculos>> findByCorIgnoreCase(@PathVariable String corName) {
+        
+        List<Veiculos> result = garageService.findByCor(corName);
+        
+        if(result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+        
+    }
+    
+    
+    @GetMapping("/ano/{anoNum}")
+    public ResponseEntity<List<VeiculosMinDTO>> findByAno(@PathVariable int anoNum) {
+        
+        List<VeiculosMinDTO> result = garageService.findByAno(anoNum);
+        
+        if(result.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(result);

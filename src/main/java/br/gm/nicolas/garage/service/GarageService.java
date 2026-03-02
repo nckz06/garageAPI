@@ -4,6 +4,7 @@
  */
 package br.gm.nicolas.garage.service;
 
+import br.gm.nicolas.garage.DTO.VeiculosMinDTO;
 import br.gm.nicolas.garage.entities.Veiculos;
 import br.gm.nicolas.garage.repositories.GaragemRepository;
 import java.util.List;
@@ -20,17 +21,42 @@ public class GarageService {
     @Autowired
     private GaragemRepository garageRepository;
     
-    public List<Veiculos> findAll() {
+    public List<VeiculosMinDTO> findAll() {
         
         List<Veiculos> result = garageRepository.findAll();
+        
+        List<VeiculosMinDTO> resultDTO = result.stream()
+                .map(x -> new VeiculosMinDTO(x)).toList();
+        
+        return resultDTO;
+        
+    }
+    
+    public VeiculosMinDTO findById(long id) {
+        
+        Veiculos result = garageRepository.findById(id);
+        
+        VeiculosMinDTO resultDTO = new VeiculosMinDTO(result);
+        
+        return resultDTO;
+        
+    }
+    
+    public List<Veiculos> findByCor(String cor) {
+        
+        List<Veiculos> result = garageRepository.findByCorIgnoreCase(cor);
         return result;
         
     }
     
-    public List<Veiculos> findById(long id) {
+    public List<VeiculosMinDTO> findByAno(int ano) {
         
-        List<Veiculos> result = garageRepository.findById(id);
-        return result;
+        List<Veiculos> resultVeiculos = garageRepository.findByAno(ano);
+        
+        List<VeiculosMinDTO> resultDTO = resultVeiculos.stream()
+                .map(x -> new VeiculosMinDTO(x)).toList();
+        
+        return resultDTO;
         
     }
 }
