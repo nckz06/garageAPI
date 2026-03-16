@@ -32,13 +32,10 @@ public class GarageService {
         
     }
     
-    public VeiculosMinDTO findById(long id) {
+    public Veiculos findById(long id) {
         
         Veiculos result = garageRepository.findById(id);
-        
-        VeiculosMinDTO resultDTO = new VeiculosMinDTO(result);
-        
-        return resultDTO;
+        return result;
         
     }
     
@@ -71,6 +68,13 @@ public class GarageService {
         
         List<Veiculos> result = garageRepository.findByModeloIgnoreCase(modelo);
         return result;
+        
+    }
+    
+    public Veiculos saveVeiculo(Veiculos novoVeiculo) {
+        
+        Veiculos veiculo = garageRepository.save(novoVeiculo);
+        return veiculo;
         
     }
 }

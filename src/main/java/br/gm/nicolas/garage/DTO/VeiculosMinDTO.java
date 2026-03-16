@@ -12,6 +12,7 @@ import br.gm.nicolas.garage.entities.Veiculos;
  */
 public class VeiculosMinDTO {
     
+    private long id;
     private String marca;
     private String modelo;
     private String cor;
@@ -24,6 +25,7 @@ public class VeiculosMinDTO {
     }
     
     public VeiculosMinDTO(Veiculos veiculos) {
+        this.id = veiculos.getId();
         this.marca = veiculos.getMarca();
         this.modelo = veiculos.getModelo();
         this.cor = veiculos.getCor();
@@ -32,6 +34,10 @@ public class VeiculosMinDTO {
         this.linkImagem = veiculos.getLinkImagem();
     }
 
+    public long getId() {
+        return id;
+    }
+    
     public String getMarca() {
         return marca;
     }

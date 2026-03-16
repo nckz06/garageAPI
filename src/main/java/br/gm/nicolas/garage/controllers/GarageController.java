@@ -8,11 +8,14 @@ import br.gm.nicolas.garage.DTO.VeiculosMinDTO;
 import br.gm.nicolas.garage.entities.Veiculos;
 import br.gm.nicolas.garage.service.GarageService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,9 +38,9 @@ public class GarageController {
     
     
     @GetMapping("/forsale/{idNum}")
-    public ResponseEntity<VeiculosMinDTO> findById(@PathVariable long idNum) {
+    public ResponseEntity<Veiculos> findById(@PathVariable long idNum) {
             
-        VeiculosMinDTO result = garageService.findById(idNum);
+        Veiculos result = garageService.findById(idNum);
         
         if (result == null) {
             return ResponseEntity.notFound().build();
@@ -99,6 +102,20 @@ public class GarageController {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(result);
+        }
+        
+    }
+    
+    
+    @PostMapping("/forsale")
+    public ResponseEntity<Veiculos> saveVeiculo(@RequestBody Veiculos novoVeiculo) {
+        
+        Optional<Veiculos> optVeiculo = Optional.of(garageService.saveVeiculo(novoVeiculo));
+        
+        if(optVeiculo.isPresent()) {
+            return ResponseEntity.ok(optVeiculo.get());
+        } else {
+            return ResponseEntity.badRequest().build();
         }
         
     }
