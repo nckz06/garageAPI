@@ -73,4 +73,18 @@ public class GarageController {
         }
         
     }
+    
+    
+    @GetMapping("/marca/{marcaName}")
+    public ResponseEntity<List<Veiculos>> findByMarcaIgnoreCase(@PathVariable String marcaName) {
+        
+        List<Veiculos> result = garageService.findByMarca(marcaName);
+        
+        if(result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+        
+    }
 }

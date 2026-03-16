@@ -59,4 +59,11 @@ public class GarageService {
         return resultDTO;
         
     }
+    
+    public List<Veiculos> findByMarca(String marca) {
+        
+        List<Veiculos> result = garageRepository.findByMarcaIgnoreCase(marca);
+        return result;
+        
+    }
 }
