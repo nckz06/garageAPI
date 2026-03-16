@@ -8,9 +8,9 @@ import br.gm.nicolas.garage.DTO.VeiculosMinDTO;
 import br.gm.nicolas.garage.entities.Veiculos;
 import br.gm.nicolas.garage.service.GarageService;
 import java.util.List;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author digma
  */
+@CrossOrigin
 @RestController
 public class GarageController {
     
@@ -79,6 +80,20 @@ public class GarageController {
     public ResponseEntity<List<Veiculos>> findByMarcaIgnoreCase(@PathVariable String marcaName) {
         
         List<Veiculos> result = garageService.findByMarca(marcaName);
+        
+        if(result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+        
+    }
+    
+    
+    @GetMapping("/modelo/{modeloName}")
+    public ResponseEntity<List<Veiculos>> findByModeloIgnoreCase(@PathVariable String modeloName) {
+        
+        List<Veiculos> result = garageService.findByModelo(modeloName);
         
         if(result.isEmpty()) {
             return ResponseEntity.notFound().build();

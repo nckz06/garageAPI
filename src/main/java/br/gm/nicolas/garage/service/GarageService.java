@@ -66,4 +66,11 @@ public class GarageService {
         return result;
         
     }
+    
+    public List<Veiculos> findByModelo(String modelo) {
+        
+        List<Veiculos> result = garageRepository.findByModeloIgnoreCase(modelo);
+        return result;
+        
+    }
 }

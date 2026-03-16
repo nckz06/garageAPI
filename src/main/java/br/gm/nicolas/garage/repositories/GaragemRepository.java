@@ -18,5 +18,7 @@ public interface GaragemRepository extends JpaRepository<Veiculos, Long> {
     List<Veiculos> findByCorIgnoreCase(String cor);
     List<Veiculos> findByAno(int ano);
     List<Veiculos> findByMarcaIgnoreCase(String marca);
+    List<Veiculos> findByModeloIgnoreCase(String modelo);
+
     
 }
